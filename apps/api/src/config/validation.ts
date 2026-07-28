@@ -8,4 +8,6 @@ export const validationSchema = Joi.object({
   PORT: Joi.number().default(3001),
 
   APP_NAME: Joi.string().default('Hospital Management System'),
+
+  MONGODB_URI: Joi.string().required(),
 });
