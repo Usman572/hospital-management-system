@@ -8,6 +8,9 @@ import { LoggerService } from './common/logger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Enable graceful shutdown hooks
+  app.enableShutdownHooks();
+
   // Enable API Versioning
   app.enableVersioning({
     type: VersioningType.URI,
@@ -44,6 +47,18 @@ async function bootstrap() {
     `🚀 Hospital Management System API is running on http://localhost:${port}`,
     'Bootstrap',
   );
+
+  process.on('SIGINT', async () => {
+    logger.warn('Received SIGINT. Shutting down application...', 'Bootstrap');
+    await app.close();
+    process.exit(0);
+  });
+
+  process.on('SIGTERM', async () => {
+    logger.warn('Received SIGTERM. Shutting down application...', 'Bootstrap');
+    await app.close();
+    process.exit(0);
+  });
 }
 
 bootstrap();
