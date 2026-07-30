@@ -6,18 +6,21 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './database';
 import { configuration, validationSchema } from './config';
 import { LoggerModule } from './common/logger';
-@Module({
- imports: [
-  ConfigModule.forRoot({
-    isGlobal: true,
-    load: [configuration],
-    validationSchema,
-   envFilePath: '.env',
-  }),
+import { PatientModule } from './modules/patient/patient.module';
 
-  DatabaseModule,
-  LoggerModule,
-],
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+      validationSchema,
+      envFilePath: '.env',
+    }),
+
+    DatabaseModule,
+    LoggerModule,
+    PatientModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
