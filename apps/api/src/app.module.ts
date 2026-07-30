@@ -7,6 +7,7 @@ import { DatabaseModule } from './database';
 import { configuration, validationSchema } from './config';
 import { LoggerModule } from './common/logger';
 import { PatientModule } from './modules/patient/patient.module';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PatientModule } from './modules/patient/patient.module';
     DatabaseModule,
     LoggerModule,
     PatientModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
