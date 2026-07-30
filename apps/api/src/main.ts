@@ -1,8 +1,9 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { LoggerService } from './common/logger';
 import { HttpExceptionFilter } from './common/exceptions';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { LoggerService } from './common/logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,10 +12,10 @@ async function bootstrap() {
 
   app.useLogger(logger);
 
-  // Register the global exception filter
+  // Global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // Register the global validation pipe
+  // Global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -25,6 +26,9 @@ async function bootstrap() {
       },
     }),
   );
+
+  // Global response interceptor
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   const port = process.env.PORT || 3001;
 
