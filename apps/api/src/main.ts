@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { LoggerService } from './common/logger';
+import { HttpExceptionFilter } from './common/exceptions';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -8,6 +9,9 @@ async function bootstrap() {
   const logger = app.get(LoggerService);
 
   app.useLogger(logger);
+
+  // Register the global exception filter
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   const port = process.env.PORT || 3001;
 
