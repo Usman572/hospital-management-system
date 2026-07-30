@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/exceptions';
@@ -7,6 +7,12 @@ import { LoggerService } from './common/logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Enable API Versioning
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1',
+  });
 
   const logger = app.get(LoggerService);
 
