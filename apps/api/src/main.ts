@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { LoggerService } from './common/logger';
@@ -12,6 +13,18 @@ async function bootstrap() {
 
   // Register the global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  // Register the global validation pipe
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
 
   const port = process.env.PORT || 3001;
 
