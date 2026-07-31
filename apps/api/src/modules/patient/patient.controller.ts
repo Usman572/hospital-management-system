@@ -1,7 +1,21 @@
-import { Body, Controller, Get, Param, Post, Version } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Version,
+} from '@nestjs/common';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { CreatePatientDto } from './dto/create-patient.dto';
+import { UpdatePatientDto } from './dto/update-patient.dto';
 import { PatientService } from './patient.service';
 
 @ApiTags('Patients')
@@ -40,5 +54,28 @@ export class PatientController {
     @Param('id') id: string,
   ) {
     return this.patientService.findOne(id);
+  }
+
+  @Version('1')
+  @Patch(':id')
+  @ApiOkResponse({
+    description: 'Update patient',
+  })
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdatePatientDto,
+  ) {
+    return this.patientService.update(id, dto);
+  }
+
+  @Version('1')
+  @Delete(':id')
+  @ApiOkResponse({
+    description: 'Delete patient',
+  })
+  async remove(
+    @Param('id') id: string,
+  ) {
+    return this.patientService.remove(id);
   }
 }
