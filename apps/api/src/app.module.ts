@@ -15,7 +15,10 @@ import { HealthModule } from './modules/health/health.module';
       isGlobal: true,
       load: [configuration],
       validationSchema,
-      envFilePath: '.env',
+      envFilePath: [
+        `.env.${process.env.NODE_ENV || 'development'}`,
+        '.env',
+      ],
     }),
 
     DatabaseModule,
