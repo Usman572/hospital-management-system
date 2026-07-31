@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 
 import { Patient, PatientDocument } from './schema/patient.schema';
 import { CreatePatientDto } from './dto/create-patient.dto';
+import { UpdatePatientDto } from './dto/update-patient.dto';
 
 @Injectable()
 export class PatientService {
@@ -22,7 +23,29 @@ export class PatientService {
   async findAll() {
     return this.patientModel.find().exec();
   }
+
   async findOne(id: string) {
-  return this.patientModel.findById(id).exec();
-}
+    return this.patientModel.findById(id).exec();
+  }
+
+  async update(
+    id: string,
+    dto: UpdatePatientDto,
+  ) {
+    return this.patientModel
+      .findByIdAndUpdate(
+        id,
+        dto,
+        {
+          new: true,
+        },
+      )
+      .exec();
+  }
+
+  async remove(id: string) {
+    return this.patientModel
+      .findByIdAndDelete(id)
+      .exec();
+  }
 }
