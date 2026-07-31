@@ -1,5 +1,6 @@
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/exceptions';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
@@ -39,12 +40,29 @@ async function bootstrap() {
   // Global response interceptor
   app.useGlobalInterceptors(new ResponseInterceptor());
 
+  // Swagger API Documentation
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Hospital Management System API')
+    .setDescription('API documentation for Hospital Management System')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+
+  SwaggerModule.setup('api/docs', app, document);
+
   const port = process.env.PORT || 3001;
 
   await app.listen(port);
 
   logger.log(
     `🚀 Hospital Management System API is running on http://localhost:${port}`,
+    'Bootstrap',
+  );
+
+  logger.log(
+    `📚 Swagger documentation available at http://localhost:${port}/api/docs`,
     'Bootstrap',
   );
 
