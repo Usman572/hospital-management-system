@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
   Version,
 } from '@nestjs/common';
 import {
@@ -18,7 +19,13 @@ import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { PatientService } from './patient.service';
 
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { UserRole } from '../auth/schema/user.schema';
+
 @ApiTags('Patients')
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('patients')
 export class PatientController {
   constructor(
@@ -26,6 +33,7 @@ export class PatientController {
   ) {}
 
   @Version('1')
+  @Roles(UserRole.ADMIN)
   @Post()
   @ApiCreatedResponse({
     description: 'Patient created successfully',
