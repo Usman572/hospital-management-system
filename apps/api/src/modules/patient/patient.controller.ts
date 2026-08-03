@@ -23,6 +23,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../auth/schema/user.schema';
+import { PatientOwnerGuard } from '../auth/guards/patient-owner.guard';
 
 @ApiTags('Patients')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -54,28 +55,17 @@ export class PatientController {
   }
 
   @Version('1')
-  @Get(':id')
-  @ApiOkResponse({
-    description: 'Get patient by ID',
-  })
-  async findOne(
-    @Param('id') id: string,
-  ) {
-    return this.patientService.findOne(id);
-  }
-
-  @Version('1')
-  @Patch(':id')
-  @ApiOkResponse({
-    description: 'Update patient',
-  })
-  async update(
-    @Param('id') id: string,
-    @Body() dto: UpdatePatientDto,
-  ) {
-    return this.patientService.update(id, dto);
-  }
-
+@UseGuards(JwtAuthGuard, PatientOwnerGuard)
+@Patch(':id')
+@ApiOkResponse({
+  description: 'Update patient',
+})
+async update(
+  @Param('id') id: string,
+  @Body() dto: UpdatePatientDto,
+) {
+  return this.patientService.update(id, dto);
+}
   @Version('1')
   @Delete(':id')
   @ApiOkResponse({
