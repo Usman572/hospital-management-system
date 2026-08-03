@@ -8,6 +8,7 @@ import { configuration, validationSchema } from './config';
 import { LoggerModule } from './common/logger';
 import { PatientModule } from './modules/patient/patient.module';
 import { HealthModule } from './modules/health/health.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { HealthModule } from './modules/health/health.module';
     LoggerModule,
     PatientModule,
     HealthModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
