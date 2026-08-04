@@ -7,13 +7,21 @@ import {
 
 export class CreateAppointmentDto {
   @IsMongoId()
+  @IsNotEmpty()
   patientId!: string;
 
-  @IsString()
+  @IsMongoId()
   @IsNotEmpty()
-  doctorName!: string;
+  doctorId!: string;
 
-  @IsDateString()
+  @IsDateString(
+    {},
+    {
+      message:
+        'appointmentDate must be a valid ISO 8601 date string',
+    },
+  )
+  @IsNotEmpty()
   appointmentDate!: string;
 
   @IsString()
