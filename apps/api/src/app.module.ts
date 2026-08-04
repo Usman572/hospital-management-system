@@ -15,6 +15,7 @@ import { DepartmentModule } from './modules/department/department.module';
 import { MedicalRecordModule } from './modules/medical-record/medical-record.module';
 import { PrescriptionModule } from './modules/prescription/prescription.module';
 import { BillingModule } from './modules/billing/billing.module';
+import { NotificationModule } from './modules/notification/notification.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { BillingModule } from './modules/billing/billing.module';
     MedicalRecordModule,
     PrescriptionModule,
     BillingModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
