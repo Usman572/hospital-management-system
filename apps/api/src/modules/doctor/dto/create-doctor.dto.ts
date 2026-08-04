@@ -1,5 +1,6 @@
 import {
   IsEmail,
+  IsMongoId,
   IsNotEmpty,
   IsString,
 } from 'class-validator';
@@ -19,4 +20,8 @@ export class CreateDoctorDto {
   @IsString()
   @IsNotEmpty()
   phone!: string;
+
+  @IsMongoId()
+  @IsNotEmpty()
+  departmentId!: string;
 }
