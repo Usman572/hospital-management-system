@@ -31,6 +31,7 @@ export class AppointmentService {
     return this.appointmentModel
       .find()
       .populate('patientId')
+      .populate('doctorId')
       .exec();
   }
 
@@ -40,6 +41,7 @@ export class AppointmentService {
     return this.appointmentModel
       .findById(id)
       .populate('patientId')
+      .populate('doctorId')
       .exec();
   }
 

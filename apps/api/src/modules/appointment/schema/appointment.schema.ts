@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 
+import { Doctor } from '../../doctor/schema/doctor.schema';
+
 export type AppointmentDocument = HydratedDocument<Appointment>;
 
 @Schema({
@@ -15,10 +17,11 @@ export class Appointment {
   patientId!: Types.ObjectId;
 
   @Prop({
+    type: Types.ObjectId,
+    ref: Doctor.name,
     required: true,
-    trim: true,
   })
-  doctorName!: string;
+  doctorId!: Types.ObjectId;
 
   @Prop({
     required: true,
@@ -35,6 +38,7 @@ export class Appointment {
     default: 'scheduled',
     enum: [
       'scheduled',
+      'confirmed',
       'completed',
       'cancelled',
     ],
