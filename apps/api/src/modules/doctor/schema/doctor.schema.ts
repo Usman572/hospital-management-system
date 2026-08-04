@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
-export type DoctorDocument = Doctor & Document;
+import { Department } from '../../department/schema/department.schema';
+
+export type DoctorDocument = HydratedDocument<Doctor>;
 
 @Schema({
   timestamps: true,
@@ -31,6 +33,13 @@ export class Doctor {
     required: true,
   })
   phone!: string;
+
+  @Prop({
+    type: Types.ObjectId,
+    ref: Department.name,
+    required: true,
+  })
+  departmentId!: Types.ObjectId;
 
   @Prop({
     default: true,

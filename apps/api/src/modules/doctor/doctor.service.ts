@@ -29,6 +29,7 @@ export class DoctorService {
   async findAll() {
     return this.doctorModel
       .find()
+      .populate('departmentId')
       .exec();
   }
 
@@ -37,6 +38,7 @@ export class DoctorService {
   ) {
     return this.doctorModel
       .findById(id)
+      .populate('departmentId')
       .exec();
   }
 

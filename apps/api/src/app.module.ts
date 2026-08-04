@@ -11,6 +11,7 @@ import { HealthModule } from './modules/health/health.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AppointmentModule } from './modules/appointment/appointment.module';
 import { DoctorModule } from './modules/doctor/doctor.module';
+import { DepartmentModule } from './modules/department/department.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { DoctorModule } from './modules/doctor/doctor.module';
     AuthModule,
     AppointmentModule,
     DoctorModule,
+    DepartmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
